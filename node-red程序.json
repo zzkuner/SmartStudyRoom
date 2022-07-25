@@ -1,0 +1,1284 @@
+[
+    {
+        "id": "2c86293cb9ccdb17",
+        "type": "tab",
+        "label": "信息处理",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3aa07f2317a76d78",
+        "type": "ui_gauge",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "group": "d649e9f4a1d30779",
+        "order": 2,
+        "width": 4,
+        "height": 3,
+        "gtype": "wave",
+        "title": "座位使用情况",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "6",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1040,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "da414a9a16a01b76",
+        "type": "inject",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 810,
+        "y": 300,
+        "wires": [
+            [
+                "3aa07f2317a76d78"
+            ]
+        ]
+    },
+    {
+        "id": "9322316ed902d55f",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 8,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位1",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1010,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "59fbe29a6fb74e37",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 10,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位2",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1170,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4d3c520b5f6554df",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 12,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位3",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1310,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5a15e62ff32ff54a",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 9,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位4",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1310,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "8ea5467c78c02aca",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 11,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位5",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "35eb72dc146c5597",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "d649e9f4a1d30779",
+        "order": 13,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "座位6",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1010,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "735f114a184e2afd",
+        "type": "mqtt in",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "topic": "seat1",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "fdac3da62e367888",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 1120,
+        "wires": [
+            [
+                "a338605a9c40ec27",
+                "94b9515d961d2bfc"
+            ]
+        ]
+    },
+    {
+        "id": "a338605a9c40ec27",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "分割数据",
+        "func": "var start=msg.payload.slice(0,2);\nvar seat_id=parseInt(msg.payload.slice(2,6),[16]);\nvar type=msg.payload.slice(6,8);\nvar seat_state=msg.payload.slice(8,10);\nvar wen=parseInt(msg.payload.slice(10,14),[16])/100;\nvar shi=parseInt(msg.payload.slice(14,16),[16]);\nvar ji=msg.payload.slice(16,18);\nvar card_id=msg.payload.slice(18,26);\n// var card_id=parseInt(msg.payload.slice(18,26),[16]);\nvar stop=msg.payload.slice(26,28)\n\n\n\nglobal.set(\"yan_seat_id\",seat_id)\nif(start=='A5' & stop=='5A')\n{\n    var msg1 = new Array(9);\n    msg1[0]=start;\n    msg1[1]=seat_id;\n    msg1[2]=type;\n    msg1[3]=seat_state;\n    msg1[4]=wen;\n    msg1[5]=shi;\n    msg1[6]=ji;\n    msg1[7]=card_id;\n    msg1[8]=stop;\n    msg.payload=msg1;\n    msg.topic='data';\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 1120,
+        "wires": [
+            [
+                "63bd3c7d6f29b865",
+                "f680297ab9d5f81c"
+            ]
+        ]
+    },
+    {
+        "id": "97206e142c50ecc7",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "座位状态",
+        "func": "var msg1 = {'payload':msg.payload[0].seat_id};\nvar msg2 = {'payload':msg.payload[0].seat_status};\nvar msg3 = {'payload':msg.payload[0].seat_wen};\nvar msg4 = {'payload':msg.payload[0].seat_shi + '%'};\nvar msg5 = {'payload':msg.payload[0].seat_s_id};\nvar msg6 = {'payload':msg.payload[0].seat_commond};\nvar msg7 = {'payload':msg.payload[0].seat_ji};\nvar msg8 = {'payload':msg.payload[0].seat_order};\n\n// return [msg1,msg2,msg3,msg4,msg5,msg6];\nswitch(msg2.payload){\n    case '0':\n        switch(msg8.payload){\n            case '0':msg2.payload = '空闲中';break;\n            case '1':msg2.payload = '预约中';break;\n        }\n    break;\n    case '1':\n        switch(msg8.payload){\n            case '0':msg2.payload = '已有人';break;\n            case '1':msg2.payload = '预约中';break;\n        }\n    break;\n    case '2':msg2.payload = '预约中';break;\n}\nswitch(msg7.payload){\n    case '0':msg7.payload = '1，2路断';break;\n    case '1':msg7.payload = '1合2断';break;\n    case '2':msg7.payload = '2合1断';break;\n    case '3':msg7.payload = '1，2路合';break;\n}\nreturn [msg1,msg3,msg4,msg2,msg7];\n\n// var msg1 = msg.payload[0].seat_id;\n// var msg2 = msg.payload[0].seat_status;\n// var msg3 = msg.payload[0].seat_wen;\n// var msg4 = msg.payload[0].seat_shi;\n// var msg5 = msg.payload[0].seat_s_id;\n// var msg6 = msg.payload[0].seat_commond;\n// msg.payload=[msg1,msg2,msg3,msg4,msg5,msg6];\n//return msg;",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 560,
+        "wires": [
+            [
+                "be3183207151d36d"
+            ],
+            [
+                "0a01c8e354e98125"
+            ],
+            [
+                "6f47d66d2241cf56"
+            ],
+            [
+                "8ffea048f4b1fa29"
+            ],
+            [
+                "d657d6e23c1b880c",
+                "1dcf58aa99cbd001"
+            ]
+        ]
+    },
+    {
+        "id": "9344d3df2fad4e28",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 710,
+        "y": 1200,
+        "wires": [
+            [
+                "f0c88f75c2696ea4"
+            ]
+        ]
+    },
+    {
+        "id": "63bd3c7d6f29b865",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "通过卡号查学号",
+        "func": "\n\nvar temp=msg.payload[2];\nif(temp == '00'){\n/////////////////////定义数据库表头\nvar table_name_users = 'users';//信息数据库\nvar CardNumber = 'CardNumber';\nvar dou = ',';\n/////////////////////////定义代发送的数据\nvar up_seat_id = msg.payload[1];//座位号\t\nvar up_CardNumber = msg.payload[7];//卡号\n// var up_CardNumber ='9958819D';//卡号\n/////////////////////////准备发送查询指令（topic中编写sql指令）\nvar sql = 'SELECT * from ' + table_name_users + ' WHERE ' +\n    CardNumber + ' =' + \"'\"+up_CardNumber+\"'\";\nmsg.topic = sql;\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1200,
+        "wires": [
+            [
+                "9344d3df2fad4e28"
+            ]
+        ]
+    },
+    {
+        "id": "692afc2ce7122622",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 610,
+        "y": 560,
+        "wires": [
+            [
+                "97206e142c50ecc7",
+                "eb98a3934f8e2710"
+            ]
+        ]
+    },
+    {
+        "id": "658cb42d5ba481bb",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "查询数据库",
+        "func": "/////////////////////定义数据库表头\nvar table_name = 'seat_data';//座位数据库\nvar dou = ',';\n/////////////////////////定义要查找的座位号\nvar seat_id = 'seat_id';\nglobal.set(\"ji_id\", msg.payload)\nvar query_seat_id = msg.payload;//座位号\t\n\n/////////////////////////准备发送查询指令（topic中编写sql指令）\nvar sql = 'SELECT * from ' + table_name + ' WHERE ' +\n    seat_id + '=' + query_seat_id;\nmsg.topic = sql;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 560,
+        "wires": [
+            [
+                "692afc2ce7122622"
+            ]
+        ]
+    },
+    {
+        "id": "7f0dc7a0fb1d7b41",
+        "type": "inject",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 460,
+        "wires": [
+            [
+                "0fd0a8ac52759265"
+            ]
+        ]
+    },
+    {
+        "id": "e8d21ba150104035",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 710,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f680297ab9d5f81c",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "上报信息",
+        "func": "//准备数据\n\n\nvar temp=msg.payload[2];\nif(temp == '01'){\n    /////////////////////定义数据库表头\n    var table_name = 'seat_data';//座位数据库\n    var seat_id = 'seat_id';//座位号\t\n    var seat_status = 'seat_status';//座位是否空闲\t\n    var seat_wen = 'seat_wen';//座位温度\n    var seat_shi = 'seat_shi';//座位湿度\n    var seat_s_id = 'seat_s_id';//预定的学号\t\n    var seat_commond = 'seat_commond';//下达的指令\n    var dou = ',';\n    /////////////////////////定义代发送的数据\n    var up_table_name = 'seat_data';//座位数据库\n    var up_seat_id = msg.payload[1];//座位号\t\n    var up_seat_status = msg.payload[3];//座位是否空闲\t\n    var up_seat_wen = msg.payload[4].toFixed(2);//座位温度\n    var up_seat_shi = msg.payload[5].toFixed(0);//座位湿度\n    var up_seat_s_id = 2019080622;//预定的学号\t\n    var up_seat_commond = 'seat_commond';//下达的指令\n    ///////////////////////定义发送的指令\n    var data_send1 = seat_wen + '=' + up_seat_wen ;\n    var data_send2 = seat_shi + '=' + up_seat_shi;\n    var data_send3 = seat_status + '=' + up_seat_status;\n    /////////////////////////准备发送数据（topic中编写sql指令）\n    var sql = 'UPDATE ' + table_name + ' SET ' +\n    data_send1 + dou +\n    data_send2 + dou +\n    data_send3 +\n    ' where ' + seat_id + '=' + up_seat_id;\n    msg.topic = sql;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1060,
+        "wires": [
+            [
+                "e8d21ba150104035"
+            ]
+        ]
+    },
+    {
+        "id": "c7f49d09b1da8d16",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 470,
+        "y": 80,
+        "wires": [
+            [
+                "0377551aecbab3e4",
+                "d4834e4f7f938982"
+            ]
+        ]
+    },
+    {
+        "id": "153ebd713d36a468",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "查询数据库",
+        "func": "/////////////////////定义数据库表头\nvar table_name = 'seat_data';//座位数据库\nvar dou = ',';\n/////////////////////////定义要查找的座位号\nvar seat_id = 'seat_id';\nvar query_seat_id = 1;//座位号\t\n\n/////////////////////////准备发送查询指令（topic中编写sql指令）\nvar i = 1;\nvar max_seats = 6;\n// for(i = 1; i <= max_seats; i++){\nvar sql = 'SELECT * from ' + table_name ;\n// + ' WHERE ' +\n// seat_id + '=' + i;\nmsg.topic = sql;\nnode.send(msg);\n\n// }\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "c7f49d09b1da8d16"
+            ]
+        ]
+    },
+    {
+        "id": "4141e77d19635a33",
+        "type": "inject",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{    \"name\": \"longtt\",    \"age\": 21,    \"class_name\": \"401\" }",
+        "payloadType": "json",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "153ebd713d36a468"
+            ]
+        ]
+    },
+    {
+        "id": "0377551aecbab3e4",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "分割数据",
+        "func": "\nvar i=0;\nvar max_seats=6;\n// var msg1 = msg.payload[0].seat_id;\n// var msg2 = msg.payload[0].seat_status;\nvar msg1=new Array(7);\nvar count=0;\n// for(i=0;i<max_seats;i++)\n// {\n//     // msg1[msg.payload[i].seat_id] = ;\n//     switch(msg.payload[i].seat_status){\n//     case '0': msg1[msg.payload[i].seat_id] = '空闲中';break;\n//     case '1': msg1[msg.payload[i].seat_id] = '已有人';count++;break;\n//     case '2': msg1[msg.payload[i].seat_id] = '预约中';break;\n//     }\n// }\nfor(i=0;i<max_seats;i++)\n{\nswitch(msg.payload[i].seat_status){\n    case '0':\n        switch(msg.payload[i].seat_order){\n            case '0':msg1[msg.payload[i].seat_id] = '空闲中';break;\n            case '1':msg1[msg.payload[i].seat_id] = '预约中';count++;break;\n        }\n    break;\n    case '1':\n        switch(msg.payload[i].seat_order){\n            case '0':msg1[msg.payload[i].seat_id] = '已有人';count++;break;\n            case '1':msg1[msg.payload[i].seat_id] = '预约中';count++;break;\n        }\n    break;\n}\n}\nmsg1[0]=count;\n// return [msg1,msg2,msg3,msg4,msg5,msg6];\nmsg.payload = msg1;\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "c6fd8a1d4ce28a3b",
+                "bc4799822d68e4bb"
+            ]
+        ]
+    },
+    {
+        "id": "91e4614eee7f7ced",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 1190,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d657d6e23c1b880c",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "8ffea048f4b1fa29",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "7c0751c9413a657a",
+        "order": 3,
+        "width": 8,
+        "height": 1,
+        "name": "",
+        "label": "座位状态",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1040,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "fb663e6b9026c8d6",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "分割数据",
+        "func": "var msg_data=msg.topic;\nmsg.payload=msg_data;\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 300,
+        "wires": [
+            [
+                "c6fd8a1d4ce28a3b"
+            ]
+        ]
+    },
+    {
+        "id": "c6fd8a1d4ce28a3b",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "be3183207151d36d",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "7c0751c9413a657a",
+        "order": 2,
+        "width": 8,
+        "height": 1,
+        "name": "",
+        "label": "座位号",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1030,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d4834e4f7f938982",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "bc4799822d68e4bb",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "func": "var count={'payload':msg.payload[0]};\nvar msg1={'payload':msg.payload[1]};\nvar msg2={'payload':msg.payload[2]};\nvar msg3={'payload':msg.payload[3]};\nvar msg4={'payload':msg.payload[4]};\nvar msg5={'payload':msg.payload[5]};\nvar msg6={'payload':msg.payload[6]};\nreturn [msg1,msg2,msg3,msg4,msg5,msg6,count];\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n// var msg_free=new Array(7);\n// var msg1,msg2,msg3,msg4,msg5,msg6;\n// switch(msg.topic){\n//     case '1':msg1 = msg.payload;msg_free[1]=msg.payload;break;\n//     case '2':msg2 = msg.payload;msg_free[2]=msg.payload;break;\n//     case '3':msg3 = msg.payload;msg_free[3]=msg.payload;break;\n//     case '4':msg4 = msg.payload;msg_free[4]=msg.payload;break;\n//     case '5':msg5 = msg.payload;msg_free[5]=msg.payload;break;\n//     case '6':msg6 = msg.payload;msg_free[6]=msg.payload;break;\n// }\n// var i=1;\n// var max_seats=6;\n// var count = 0;\n// for(i = 1; i <= max_seats; i++)\n// {\n//     if(msg_free[i] == '已有人')\n//         count++;\n// }\n// var msg_freenum={'payload' : count};\n// return [msg1,msg2,msg3,msg4,msg5,msg6,msg_freenum];",
+        "outputs": 7,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 160,
+        "wires": [
+            [
+                "9322316ed902d55f"
+            ],
+            [
+                "59fbe29a6fb74e37"
+            ],
+            [
+                "4d3c520b5f6554df"
+            ],
+            [
+                "5a15e62ff32ff54a"
+            ],
+            [
+                "8ea5467c78c02aca"
+            ],
+            [
+                "35eb72dc146c5597"
+            ],
+            [
+                "3aa07f2317a76d78"
+            ]
+        ]
+    },
+    {
+        "id": "0fd0a8ac52759265",
+        "type": "ui_dropdown",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "座位号选择",
+        "group": "7c0751c9413a657a",
+        "order": 1,
+        "width": 8,
+        "height": 1,
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "座位1",
+                "value": 1,
+                "type": "num"
+            },
+            {
+                "label": "座位2",
+                "value": "2",
+                "type": "str"
+            },
+            {
+                "label": "座位3",
+                "value": "3",
+                "type": "str"
+            },
+            {
+                "label": "座位4",
+                "value": "4",
+                "type": "str"
+            },
+            {
+                "label": "座位5",
+                "value": "5",
+                "type": "str"
+            },
+            {
+                "label": "座位6",
+                "value": "6",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 200,
+        "y": 560,
+        "wires": [
+            [
+                "658cb42d5ba481bb",
+                "461f5bd6cb87ea9b"
+            ]
+        ]
+    },
+    {
+        "id": "9de02d95c8377831",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "通过学号查询座位号",
+        "func": "user_id=msg.payload[0].user_id;\n/////////////////////定义数据库表头\nvar table_name = 'seat_data';//座位数据库\nvar seat_id = 'seat_id';//座位号\t\nvar seat_s_id = 'seat_s_id';//预定的学号\t\nvar dou = ',';\n/////////////////////////定义代发送的数据\nvar up_seat_s_id = user_id;//预定的学号\t\n/////////////////////////准备发送查询指令（topic中编写sql指令）\nvar sql = 'SELECT * from ' + table_name + ' WHERE ' +\n    seat_s_id + '=' + up_seat_s_id;\nmsg.topic = sql;\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 1200,
+        "wires": [
+            [
+                "a706519a994f67e2"
+            ]
+        ]
+    },
+    {
+        "id": "a706519a994f67e2",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 1110,
+        "y": 1200,
+        "wires": [
+            [
+                "9fed6d10985aef5c",
+                "3dbbcec50d1342bb"
+            ]
+        ]
+    },
+    {
+        "id": "9fed6d10985aef5c",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "更改数据库就坐命令",
+        "func": "var seat_id = msg.payload[0].seat_id;\nvar seat_ji = msg.payload[0].seat_ji;\nvar order = msg.payload[0].seat_order;\nvar yan_seat_id=global.get(\"yan_seat_id\");\n/////////////////////定义数据库表头\n    var table_name = 'seat_data';//座位数据库\n    var seat_id_n = 'seat_id';//座位号\t\n    var seat_status = 'seat_status';//座位是否空闲\t\n    var seat_order = 'seat_order';//座位是否y预约\t\n    var seat_commond = 'seat_commond';//下达的指令\n    var seat_s_id = 'seat_s_id';//下达的指令\n    var dou = ',';\n    /////////////////////////定义代发送的数据\n    var up_table_name = 'seat_data';//座位数据库\n    var up_seat_id = yan_seat_id;//座位号\t\n    var up_seat_status = 1;//座位是否空闲\t\n    var up_seat_order = order;//座位是否y预约\t\n    var up_seat_commond = 1;//下达的指令\n    var data_send1 = '';\n    var data_send2 = '';\n    var data_send3 = '';\n    var sql='';\n\nif(seat_id==yan_seat_id){\n    //发送命令\n    if(order=='1'){\n        order = '0';\n         ///////////////////////定义发送的指令\n        data_send1 = seat_commond + '=' + up_seat_commond;\n        data_send2 = seat_status + '=' + up_seat_status;\n        data_send3 = seat_order + '=' + order;\n        /////////////////////////准备发送数据（topic中编写sql指令）\n        sql = 'UPDATE ' + table_name + ' SET ' +\n        data_send1 + dou +\n        data_send2 + dou +\n        data_send3 +\n        ' where ' + seat_id_n + '=' + up_seat_id;\n        msg.topic = sql;\n        msg.payload[0]=yan_seat_id;\n        msg.payload[1]=up_seat_commond;\n        msg.payload[2]=seat_ji;\n        // msg.payload[2]=seat_ji;\n        return msg;\n    }\n    else if(order=='0'){\n    ///////////////////////定义发送的指令\n    up_seat_commond = '0';\n    up_seat_status = 0;\n    var up_seat_s_id='0';//学号\n     data_send1 = seat_commond + '=' + up_seat_commond;\n     data_send2 = seat_status + '=' + up_seat_status;\n     data_send3 = seat_s_id + '=' + up_seat_s_id;\n    /////////////////////////准备发送数据（topic中编写sql指令）\n    sql = 'UPDATE ' + table_name + ' SET ' +\n    data_send1 + dou +\n    data_send2 + dou +\n    data_send3 +\n    ' where ' + seat_id_n + '=' + up_seat_id;\n    msg.topic = sql;\n    msg.payload[0]=yan_seat_id;\n    msg.payload[1]=up_seat_commond;\n    msg.payload[2]=seat_ji;\n    // msg.payload[2]=seat_ji;\n    return msg;\n    }\n    \n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1060,
+        "wires": [
+            [
+                "91e4614eee7f7ced",
+                "620632f59b8d6646"
+            ]
+        ]
+    },
+    {
+        "id": "f0c88f75c2696ea4",
+        "type": "delay",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 1280,
+        "wires": [
+            [
+                "9de02d95c8377831"
+            ]
+        ]
+    },
+    {
+        "id": "ca43751408e04d0b",
+        "type": "mqtt out",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "topic": "seat1_commond",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fdac3da62e367888",
+        "x": 1000,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "5f3cc8b8892b6157",
+        "type": "inject",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 610,
+        "y": 1460,
+        "wires": [
+            [
+                "61e4ccdaf4f861ab"
+            ]
+        ]
+    },
+    {
+        "id": "61e4ccdaf4f861ab",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "下发数据准备",
+        "func": "\nvar seat_id=msg.payload[0];\nseat_id=seat_id.toString(16);\nseat_id=seat_id.toUpperCase();\nseat_id=seat_id.padStart(4, '0');\nvar type='01';\nvar seat_state='01';\nvar commond=msg.payload[1];\ncommond=commond.toString(16);\ncommond=commond.toUpperCase();\ncommond=commond.padStart(2, '0');\nvar ji=msg.payload[2];\nji=ji.toUpperCase();\nji=ji.padStart(2, '0');\n\nvar msg1 = new Array(9);\nmsg1[0]='B5';//\nmsg1[1]=seat_id;//\nmsg1[2]=type;\nmsg1[3]=seat_state;//\nmsg1[4]=commond;//\nmsg1[5]=ji;\nmsg1[6]='5B';\n\nmsg.payload=msg1[0]+msg1[1]+msg1[2]+msg1[3]+msg1[4]+msg1[5]+msg1[6];\nmsg.topic='down_data';\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1420,
+        "wires": [
+            [
+                "ca43751408e04d0b"
+            ]
+        ]
+    },
+    {
+        "id": "620632f59b8d6646",
+        "type": "delay",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 1380,
+        "wires": [
+            [
+                "61e4ccdaf4f861ab"
+            ]
+        ]
+    },
+    {
+        "id": "1dcf58aa99cbd001",
+        "type": "ui_text",
+        "z": "2c86293cb9ccdb17",
+        "group": "7c0751c9413a657a",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "继电器状态",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1050,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "3dbbcec50d1342bb",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "eb98a3934f8e2710",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "94b9515d961d2bfc",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 270,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "0a01c8e354e98125",
+        "type": "ui_gauge",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "group": "7c0751c9413a657a",
+        "order": 4,
+        "width": 4,
+        "height": 3,
+        "gtype": "donut",
+        "title": "温度",
+        "label": "℃",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1030,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6f47d66d2241cf56",
+        "type": "ui_gauge",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "group": "7c0751c9413a657a",
+        "order": 5,
+        "width": 4,
+        "height": 3,
+        "gtype": "wave",
+        "title": "湿度",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1030,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "77f4598026efd178",
+        "type": "ui_dropdown",
+        "z": "2c86293cb9ccdb17",
+        "name": "继电器控制",
+        "label": "",
+        "tooltip": "",
+        "place": "继电器控制",
+        "group": "7c0751c9413a657a",
+        "order": 7,
+        "width": 8,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "1，2路断",
+                "value": 0,
+                "type": "num"
+            },
+            {
+                "label": "1合2断",
+                "value": 1,
+                "type": "num"
+            },
+            {
+                "label": "2合1断",
+                "value": 2,
+                "type": "num"
+            },
+            {
+                "label": "1，2路合",
+                "value": 3,
+                "type": "num"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 150,
+        "y": 860,
+        "wires": [
+            [
+                "3b5edf8ae1ad0a88",
+                "749ed56ceec9f2a6"
+            ]
+        ]
+    },
+    {
+        "id": "f856142bab5ac0d8",
+        "type": "mysql",
+        "z": "2c86293cb9ccdb17",
+        "mydb": "bed85fce861714e7",
+        "name": "",
+        "x": 550,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b5edf8ae1ad0a88",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "修改数据库",
+        "func": "//准备数据\nvar ji_id=global.get(\"ji_id\");\n/////////////////////定义数据库表头\nvar table_name = 'seat_data';//座位数据库\nvar seat_id = 'seat_id';//座位号\t\nvar seat_ji = 'seat_ji';\nvar dou = ',';\n/////////////////////////定义代发送的数据\nvar up_table_name = 'seat_data';//座位数据库\nvar up_seat_ji = msg.payload;//\n///////////////////////定义发送的指令\nvar data_send1 = seat_ji + '=' + up_seat_ji ;\n/////////////////////////准备发送数据（topic中编写sql指令）\nvar sql = 'UPDATE ' + table_name + ' SET ' +\ndata_send1 +\n' where ' + seat_id + '=' + ji_id;\nmsg.topic = sql;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 940,
+        "wires": [
+            [
+                "f856142bab5ac0d8"
+            ]
+        ]
+    },
+    {
+        "id": "461f5bd6cb87ea9b",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "43b3c09183756a11",
+        "type": "mqtt out",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "topic": "seat1_commond",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fdac3da62e367888",
+        "x": 840,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "72cd516b9217d681",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "下发数据准备",
+        "func": "var ji_id=global.get(\"ji_id\");\n\n\n\nvar seat_id=ji_id;\nseat_id=seat_id.toString(16);\nseat_id=seat_id.toUpperCase();\nseat_id=seat_id.padStart(4, '0');\n\nvar type='02';\n\nvar ji=msg.payload;\nji=ji.toString(16);\nji=ji.toUpperCase();\nji=ji.padStart(2, '0');\n\nvar msg1 = new Array(9);\nmsg1[0]='B5';//\nmsg1[1]=seat_id;//\nmsg1[2]=type;\nmsg1[3]='01';//\nmsg1[4]='01';//\nmsg1[5]=ji;\nmsg1[6]='5B';\n\nmsg.payload=msg1[0]+msg1[1]+msg1[2]+msg1[3]+msg1[4]+msg1[5]+msg1[6];\nmsg.topic=seat_id;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 860,
+        "wires": [
+            [
+                "43b3c09183756a11",
+                "6289bc2e6ed58b82",
+                "5cecd660141a494a"
+            ]
+        ]
+    },
+    {
+        "id": "749ed56ceec9f2a6",
+        "type": "delay",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 860,
+        "wires": [
+            [
+                "72cd516b9217d681"
+            ]
+        ]
+    },
+    {
+        "id": "6289bc2e6ed58b82",
+        "type": "debug",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "b5a16e1992eed7ab",
+        "type": "delay",
+        "z": "2c86293cb9ccdb17",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "658cb42d5ba481bb"
+            ]
+        ]
+    },
+    {
+        "id": "5cecd660141a494a",
+        "type": "function",
+        "z": "2c86293cb9ccdb17",
+        "name": "更新",
+        "func": "\nmsg.payload=msg.topic;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 780,
+        "wires": [
+            [
+                "b5a16e1992eed7ab"
+            ]
+        ]
+    },
+    {
+        "id": "ee36ffb6929e1908",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 1,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "6dad0cec1b8fb994",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 3,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "10acf231ba999c75",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 4,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "37106a6042a6cce5",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 5,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "bbf7f6cacfae4188",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 6,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "2d78b068824bdff8",
+        "type": "ui_spacer",
+        "z": "2c86293cb9ccdb17",
+        "name": "spacer",
+        "group": "d649e9f4a1d30779",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "d649e9f4a1d30779",
+        "type": "ui_group",
+        "name": "座位整体使用情况",
+        "tab": "b182fbf51e3ba48c",
+        "order": 2,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fdac3da62e367888",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "101.34.25.231",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bed85fce861714e7",
+        "type": "MySQLdatabase",
+        "name": "data1",
+        "host": "101.34.25.231",
+        "port": "3306",
+        "db": "data1",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "7c0751c9413a657a",
+        "type": "ui_group",
+        "name": "座位信息",
+        "tab": "b182fbf51e3ba48c",
+        "order": 3,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b182fbf51e3ba48c",
+        "type": "ui_tab",
+        "name": "智能空间管理系统",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
